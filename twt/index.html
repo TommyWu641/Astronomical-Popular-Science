@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Observatory - Explore the Universe</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container">
+            <div class="logo">
+                <span class="logo-icon">🔭</span>
+                <h1>Observatory</h1>
+            </div>
+            <ul class="nav-links">
+                <li><a href="#home" data-en="Home" data-zh="首頁">Home</a></li>
+                <li><a href="#about" data-en="About" data-zh="關於我們">About</a></li>
+                <li><a href="#observations" data-en="Observations" data-zh="觀測資訊">Observations</a></li>
+                <li><a href="#gallery" data-en="Gallery" data-zh="圖片庫">Gallery</a></li>
+                <li><a href="#quiz" data-en="Quiz" data-zh="問答挑戰">Quiz</a></li>
+                <li><a href="#contact" data-en="Contact" data-zh="聯絡我們">Contact</a></li>
+            </ul>
+            <div class="nav-controls">
+                <button class="control-btn" id="theme-toggle" onclick="toggleTheme()" title="Toggle Theme">
+                    🌙
+                </button>
+                <button class="control-btn" id="lang-toggle" onclick="toggleLanguage()" title="Switch Language">
+                    中文
+                </button>
+            </div>
+            <div class="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <div class="hero-content">
+            <h2 data-en="Explore the Infinite Universe" data-zh="探索宇宙的無限可能">Explore the Infinite Universe</h2>
+            <p data-en="Look up at the stars and discover endless mysteries and beauty" data-zh="仰望星空，發現無盡的奧秘與美麗">Look up at the stars and discover endless mysteries and beauty</p>
+            <button class="cta-button" onclick="scrollToSection('quiz')" data-en="Start Quiz" data-zh="開始答題">Start Quiz</button>
+        </div>
+        <div class="stars"></div>
+    </section>
+
+    <!-- Quiz Section -->
+    <section id="quiz" class="quiz-section">
+        <div class="container">
+            <h2 class="section-title" data-en="🌟 Astronomy Knowledge Quiz" data-zh="🌟 天文知識問答">🌟 Astronomy Knowledge Quiz</h2>
+            <div class="quiz-intro">
+                <p data-en="Test your astronomy knowledge with 15 fun questions!" data-zh="15道有趣的天文問題，測試你的天文知識！">Test your astronomy knowledge with 15 fun questions!</p>
+                <p class="quiz-tip" data-en="💡 Each correct answer = 1 point. Let's see how much you know!" data-zh="💡 答對一題得1分，看看你能得多少分！">💡 Each correct answer = 1 point. Let's see how much you know!</p>
+            </div>
+            
+            <!-- Quiz Start Screen -->
+            <div class="quiz-start-screen" id="quiz-start-screen">
+                <div class="quiz-icon">🔭</div>
+                <h3 data-en="Ready to Test Your Knowledge?" data-zh="準備好測試你的知識了嗎？">Ready to Test Your Knowledge?</h3>
+                <p data-en="15 questions about astronomy, space, and the universe" data-zh="15道關於天文、太空和宇宙的問題">15 questions about astronomy, space, and the universe</p>
+                <button class="cta-button quiz-start-btn" onclick="startQuiz()" data-en="🚀 Start Quiz" data-zh="🚀 開始答題">🚀 Start Quiz</button>
+            </div>
+            
+            <!-- Quiz Game Screen -->
+            <div class="quiz-game-screen" id="quiz-game-screen" style="display: none;">
+                <div class="quiz-header">
+                    <div class="progress-info">
+                        <span><span data-en="Question" data-zh="第">Question</span> <span id="current-question">1</span> / 15</span>
+                    </div>
+                    <div class="score-display">
+                        <span data-en="Score: " data-zh="分數：">Score: </span>
+                        <span id="live-score">0</span>
+                    </div>
+                </div>
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progress-fill"></div>
+                </div>
+                
+                <div class="quiz-current-question" id="quiz-current-question">
+                    <!-- Current question will be displayed here -->
+                </div>
+                
+                <div class="quiz-feedback" id="quiz-feedback" style="display: none;">
+                    <!-- Feedback will appear here -->
+                </div>
+                
+                <div class="quiz-nav">
+                    <button class="cta-button quiz-skip-btn" id="quiz-skip-btn" onclick="skipQuestion()" data-en="💡 Show Answer" data-zh="💡 顯示答案">
+                        💡 Show Answer
+                    </button>
+                    <button class="cta-button quiz-next-btn" id="quiz-next-btn" style="display: none;" onclick="nextQuestion()">
+                        <span data-en="Next Question" data-zh="下一題">Next Question</span> →
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Quiz Result Screen -->
+            <div class="quiz-result-screen" id="quiz-result-screen" style="display: none;">
+                <div class="result-icon" id="result-icon">🏆</div>
+                <h3 data-en="Quiz Complete!" data-zh="答題完成！">Quiz Complete!</h3>
+                <div class="final-score">
+                    <span class="score-number" id="final-score">0</span>
+                    <span class="score-total" data-en=" / 15" data-zh=" / 15"> / 15</span>
+                </div>
+                <p class="result-message" id="result-message">Great job!</p>
+                <div class="result-stats">
+                    <div class="stat-item">
+                        <span class="stat-label" data-en="✅ Correct" data-zh="✅ 正確">✅ Correct</span>
+                        <span class="stat-value" id="correct-count">0</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-label" data-en="❌ Wrong" data-zh="❌ 錯誤">❌ Wrong</span>
+                        <span class="stat-value" id="wrong-count">0</span>
+                    </div>
+                </div>
+                <button class="cta-button" onclick="restartQuiz()" data-en="🔄 Try Again" data-zh="🔄 重新開始">🔄 Try Again</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="about-section">
+        <div class="container">
+            <h2 class="section-title" data-en="About the Observatory" data-zh="關於天文臺">About the Observatory</h2>
+            <div class="about-grid">
+                <div class="about-card">
+                    <div class="card-icon">🌟</div>
+                    <h3 data-en="Professional Observation" data-zh="專業觀測">Professional Observation</h3>
+                    <p data-en="Equipped with advanced telescopes and observation equipment, providing professional-grade astronomical observation services." data-zh="配備先進的天文望遠鏡和觀測設備，提供專業級的天文觀測服務。">Equipped with advanced telescopes and observation equipment, providing professional-grade astronomical observation services.</p>
+                </div>
+                <div class="about-card">
+                    <div class="card-icon">📚</div>
+                    <h3 data-en="Science Education" data-zh="科普教育">Science Education</h3>
+                    <p data-en="Regular astronomy lectures and observation activities to promote astronomical science education." data-zh="定期舉辦天文知識講座和觀測活動，推廣天文科普教育。">Regular astronomy lectures and observation activities to promote astronomical science education.</p>
+                </div>
+                <div class="about-card">
+                    <div class="card-icon">🌌</div>
+                    <h3 data-en="Research & Exploration" data-zh="研究探索">Research & Exploration</h3>
+                    <p data-en="Dedicated to astrophysics research, exploring the origin and evolution of the universe." data-zh="致力於天文物理研究，探索宇宙的起源與演化。">Dedicated to astrophysics research, exploring the origin and evolution of the universe.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Observations Section -->
+    <section id="observations" class="observations-section">
+        <div class="container">
+            <h2 class="section-title" data-en="Today's Observation Info" data-zh="今日觀測資訊">Today's Observation Info</h2>
+            <div class="observation-panel">
+                <div class="obs-item">
+                    <h4 data-en="🌅 Sunset Time" data-zh="🌅 日落時間">🌅 Sunset Time</h4>
+                    <p class="obs-time" id="sunset-time">18:45</p>
+                </div>
+                <div class="obs-item">
+                    <h4 data-en="🌙 Moonrise Time" data-zh="🌙 月出時間">🌙 Moonrise Time</h4>
+                    <p class="obs-time" id="moonrise-time">19:30</p>
+                </div>
+                <div class="obs-item">
+                    <h4 data-en="🌑 Moon Phase" data-zh="🌑 月相">🌑 Moon Phase</h4>
+                    <p class="obs-phase" id="moon-phase" data-en="New Moon" data-zh="新月">New Moon</p>
+                </div>
+                <div class="obs-item">
+                    <h4 data-en="✨ Visible Planets" data-zh="✨ 可見行星">✨ Visible Planets</h4>
+                    <p class="obs-planets" id="visible-planets" data-en="Jupiter, Saturn" data-zh="木星、土星">Jupiter, Saturn</p>
+                </div>
+            </div>
+            <div class="weather-info">
+                <h3 data-en="Observation Weather Status" data-zh="觀測天氣狀況">Observation Weather Status</h3>
+                <div class="weather-display">
+                    <div class="weather-item">
+                        <span data-en="Visibility" data-zh="能見度">Visibility</span>
+                        <span class="weather-value" id="visibility" data-en="Good" data-zh="良好">Good</span>
+                    </div>
+                    <div class="weather-item">
+                        <span data-en="Cloud Cover" data-zh="雲量">Cloud Cover</span>
+                        <span class="weather-value" id="cloud-cover">15%</span>
+                    </div>
+                    <div class="weather-item">
+                        <span data-en="Observation Index" data-zh="觀測指數">Observation Index</span>
+                        <span class="weather-value" id="obs-index">★★★★☆</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Gallery Section -->
+    <section id="gallery" class="gallery-section">
+        <div class="container">
+            <h2 class="section-title" data-en="Star Gallery" data-zh="星空圖片庫">Star Gallery</h2>
+            <div class="gallery-grid">
+                <div class="gallery-item" data-title="Andromeda Galaxy">
+                    <div class="placeholder-img" style="background-image: url('https://images.unsplash.com/photo-1462332420958-a05d1e002413?w=600&q=80');">
+                        <span class="img-overlay" data-en="Andromeda Galaxy" data-zh="仙女座星系">Andromeda Galaxy</span>
+                    </div>
+                </div>
+                <div class="gallery-item" data-title="Orion Nebula">
+                    <div class="placeholder-img" style="background-image: url('https://images.unsplash.com/photo-1462331940025-496dfbfc7564?w=600&q=80');">
+                        <span class="img-overlay" data-en="Orion Nebula" data-zh="獵戶座星雲">Orion Nebula</span>
+                    </div>
+                </div>
+                <div class="gallery-item" data-title="Milky Way Center">
+                    <div class="placeholder-img" style="background-image: url('https://images.unsplash.com/photo-1538370965046-79c0d6907d47?w=600&q=80');">
+                        <span class="img-overlay" data-en="Milky Way Center" data-zh="銀河中心">Milky Way Center</span>
+                    </div>
+                </div>
+                <div class="gallery-item" data-title="Big Dipper">
+                    <div class="placeholder-img" style="background-image: url('https://images.unsplash.com/photo-1419242902214-272b3f66ee7a?w=600&q=80');">
+                        <span class="img-overlay" data-en="Big Dipper" data-zh="北斗七星">Big Dipper</span>
+                    </div>
+                </div>
+                <div class="gallery-item" data-title="Solar Prominence">
+                    <div class="placeholder-img" style="background-image: url('https://images.unsplash.com/photo-1446941611757-91d2c3bd3d45?w=600&q=80');">
+                        <span class="img-overlay" data-en="Solar Prominence" data-zh="太陽日珥">Solar Prominence</span>
+                    </div>
+                </div>
+                <div class="gallery-item" data-title="Lunar Surface">
+                    <div class="placeholder-img" style="background-image: url('https://images.unsplash.com/photo-1446776811953-b23d57bd21aa?w=600&q=80');">
+                        <span class="img-overlay" data-en="Lunar Surface" data-zh="月球表面">Lunar Surface</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="contact-section">
+        <div class="container">
+            <h2 class="section-title" data-en="Contact Us" data-zh="聯絡我們">Contact Us</h2>
+            <div class="contact-grid">
+                <form class="contact-form" id="contact-form">
+                    <div class="form-group">
+                        <label for="name" data-en="Name" data-zh="姓名">Name</label>
+                        <input type="text" id="name" name="name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email" data-en="Your Email" data-zh="電子郵件">Your Email</label>
+                        <input type="email" id="email" name="email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="message" data-en="Message" data-zh="訊息內容">Message</label>
+                        <textarea id="message" name="message" rows="5" required></textarea>
+                    </div>
+                    <button type="submit" class="submit-btn" data-en="📧 Send via Email" data-zh="📧 發送郵件">📧 Send via Email</button>
+                </form>
+                <div class="contact-info">
+                    <h3 data-en="Observatory Information" data-zh="天文臺資訊">Observatory Information</h3>
+                    <div class="info-item">
+                        <span class="info-label" data-en="📍 Address:" data-zh="📍 地址：">📍 Address:</span>
+                        <span data-en="City University of Hong Kong, Kowloon, Hong Kong" data-zh="香港九龍香港城市大學">City University of Hong Kong, Kowloon, Hong Kong</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label" data-en="📞 Phone:" data-zh="📞 電話：">📞 Phone:</span>
+                        <span>+852 9806 3908</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label" data-en="📧 Email:" data-zh="📧 郵箱：">📧 Email:</span>
+                        <span>wuzijing1112@gmail.com</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label" data-en="🕒 Opening Hours:" data-zh="🕒 開放時間：">🕒 Opening Hours:</span>
+                        <span data-en="Tuesday - Sunday: 09:00 - 21:00" data-zh="週二至週日 09:00-21:00">Tuesday - Sunday: 09:00 - 21:00</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p data-en="© 2026 Observatory. All Rights Reserved." data-zh="© 2026 天文臺. 保留所有權利。">&copy; 2026 Observatory. All Rights Reserved.</p>
+            <div class="social-links">
+                <a href="#" title="Facebook">📘</a>
+                <a href="#" title="Instagram">📷</a>
+                <a href="#" title="YouTube">🎥</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Image Modal -->
+    <div class="modal" id="image-modal">
+        <div class="modal-content">
+            <span class="close-btn">&times;</span>
+            <div class="modal-image"></div>
+            <h3 class="modal-title"></h3>
+        </div>
+    </div>
+
+    <!-- Back to Top Button -->
+    <button class="back-to-top" id="back-to-top" onclick="scrollToTop()" title="Back to Top">
+        ↑
+    </button>
+
+    <script src="script.js"></script>
+</body>
+</html>
